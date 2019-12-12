@@ -1,0 +1,16 @@
+/* *:focus {
+  border: none;
+  outline: none;
+} */
+
+.App {
+  font-family: sans-serif;
+  text-align: center;
+}
+
+.item {
+}
+
+.item.active {
+  border: 1px solid green;
+}
