@@ -1,29 +1,8 @@
 import React from "react";
 
-export default function ListItem({
-  idx,
-  index,
-  classes,
-  focused,
-  active,
-  styles,
-  selected,
-  item,
-  children
-}) {
+export default function ListItem({ item, children, ...props }) {
   return (
-    <div
-      id={idx}
-      className={`
-      item
-      ${classes}
-      ${active === index ? "active" : null}
-      `}
-      // ${(selected && "selected") || ""}
-      style={styles}
-      tabIndex={"-1" || index}
-      onFocus={e => e.persist() && console.log(e)}
-    >
+    <div tabIndex={-1} {...props}>
       <span>{item.name}</span>
       <span>{children}</span>
     </div>
