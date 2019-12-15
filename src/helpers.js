@@ -8,7 +8,7 @@ export function existsName(name, arr) {
   return arr.some(item => item === name);
 }
 // handle search term from input:
-export function filterSearch(term, arr, cb, reset) {
+export function filterSearch(term, arr, cb, reset, propertyName) {
   if (!term.length > 0) {
     // if input is cleared, reset items
     return cb(reset);
@@ -18,7 +18,7 @@ export function filterSearch(term, arr, cb, reset) {
   // filter thru the copied reference array,
   const matches = reference.filter(item => {
     // handle instant search
-    if (item.name.includes(term)) {
+    if (item[propertyName].includes(term)) {
       // add current matching item back to state
       cb(st => [{ ...item }]);
       // add current matching item to matches array

@@ -11,9 +11,9 @@ export default function Paper({ id, ...props }) {
       <Selector
         id="select-box"
         paperState={{ paper, updatePaperState }}
+        /* const {focused, data = store.items} = {...props} */
         {...props}
       />
-      {/* const {focused, data = store.items} = {...props} */}
     </div>
   );
 }

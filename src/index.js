@@ -8,7 +8,6 @@ import "./styles.css";
 function App() {
   const appRef = useRef();
 
-  // destructure isFocused, to track which element has focus, if needed.
   const isFocused = useFocusListener(appRef, [
     "select-box",
     "select-list",
@@ -18,7 +17,12 @@ function App() {
 
   return (
     <div className="App" ref={appRef} tabIndex={0}>
-      <Paper id="sheet" data={store.items} focused={isFocused} />
+      <Paper
+        id="sheet"
+        data={store.items}
+        listItemProperty={"name"}
+        focused={isFocused}
+      />
     </div>
   );
 }

@@ -9,10 +9,16 @@ import { filterSearch, getIndex } from "../helpers";
 // =================  ================= ================= =================
 // =============== handling selected and updaing selected  ================
 // =================  ================= ================= =================
-// TODO:
+// TODO: handle errors for non-matching element search imputs
 // =================  ================= ================= =================
 
-export default function Selector({ data, focused, paperState, ...props }) {
+export default function Selector({
+  data,
+  focused,
+  paperState,
+  listItemProperty,
+  ...props
+}) {
   const selectorRef = useRef();
   const inputRef = useRef();
   const listRef = useRef();
@@ -79,21 +85,19 @@ export default function Selector({ data, focused, paperState, ...props }) {
 
   const handleSelected = val => {
     if (selected) return console.warn("selected entry fail"); // don't run if there is already a selection
-    // uses index to setSelected
 
     if (checkSelected(val)) {
-      // console.log("checkselected", checkSelected(val));
+      // if val is truthy, then apply else, find index below.
       return applySelected(val);
     }
 
-    // sets selected on search input Submit // when nothing is selected
     if (!selected && !inputRef.current.value) {
-      // return console.log("pls make a selection");
+      return console.warn("pls make a selection");
     }
 
-    // only runs via handleSubmit form submit
+    // sets selected on search input Submit // when nothing is selected
     let index = getIndex(inputRef.current.value, initialItems);
-    // console.log("gotIndex", index);
+    // only runs via handleSubmit form submit // uses index to setSelected
     if (checkSelected(index)) applySelected(index);
     return clearItemsSelected(); // - removes "only-items"
   };
@@ -103,13 +107,13 @@ export default function Selector({ data, focused, paperState, ...props }) {
     // call handle selected if nothing is selected, then run the rest...
     if (!selected) return handleSelected();
 
-    let { value: currValue } = inputRef.current;
+    let { value: currInputValue } = inputRef.current;
 
     // prevent submitting when value is empty.
-    if (!currValue) return console.warn("please enter a value");
+    if (!currInputValue) return console.warn("please enter a value");
 
     // create new element
-    const elementToAdd = setNewElement(currValue, initialItems[selected]);
+    const elementToAdd = setNewElement(currInputValue, initialItems[selected]);
     // add to paperState wtih updated item
     elementToAdd && paperState.updatePaperState(elementToAdd);
     return clearItemsSelected(false); // clears all items and selected item.
@@ -118,15 +122,15 @@ export default function Selector({ data, focused, paperState, ...props }) {
   return (
     <>
       <small>
-        <mark>{`selected: ${JSON.stringify(selected)}`}</mark>
+        {/* <mark>{`selected: ${JSON.stringify(selected)}`}</mark>
         <br />
         <mark>{`selected: ${JSON.stringify(initialItems[selected])}`}</mark>
-        <br />
+        <br /> */}
         <mark>{`paper: ${JSON.stringify(paperState.paper)}`}</mark>
         <br />
       </small>
       <div className={`container`} ref={selectorRef} {...props}>
-        <form onSubmit={handleSubmit} tabIndex={-1}>
+        <form onSubmit={handleSubmit} tabIndex={-1} className="select-form">
           <Input
             ref={inputRef}
             autoComplete="off"
@@ -137,7 +141,13 @@ export default function Selector({ data, focused, paperState, ...props }) {
             placeholder={!selected || selected === 0 ? `search...` : "value"}
             defaultValue={""}
             onChange={e =>
-              filterSearch(e.target.value, items, setItems, initialItems)
+              filterSearch(
+                e.target.value,
+                items,
+                setItems,
+                initialItems,
+                listItemProperty
+              )
             }
           />
           <Button
@@ -148,9 +158,9 @@ export default function Selector({ data, focused, paperState, ...props }) {
             type="button"
             children={
               selected && initialItems[selected]
-                ? initialItems[selected].name
+                ? initialItems[selected][listItemProperty]
                 : selected === 0 && initialItems[0]
-                ? initialItems[0].name
+                ? initialItems[0][listItemProperty]
                 : "select..."
             }
             disabled={!checkSelected(selected)}
@@ -168,6 +178,7 @@ export default function Selector({ data, focused, paperState, ...props }) {
               handleSelected={handleSelected}
               focusInput={focusInput}
               toggleShowList={toggleShowList}
+              listItemProperty={listItemProperty}
             />
           </span>
         )}

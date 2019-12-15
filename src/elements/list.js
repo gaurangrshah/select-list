@@ -13,6 +13,7 @@ const List = forwardRef(
       focusInput,
       toggleShowList,
       onItemClick,
+      listItemProperty,
       children,
       ...props
     },
@@ -55,6 +56,7 @@ const List = forwardRef(
           setActive={setActive}
           sortBy={sortBy}
           handleSelected={handleSelected}
+          listItemProperty={listItemProperty}
         />
         <span>{children}</span>
       </div>

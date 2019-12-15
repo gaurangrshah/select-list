@@ -3,6 +3,10 @@
   outline: none;
 }
 
+* {
+  box-sizing: border-box;
+}
+
 html,
 body {
   margin: 0;
@@ -10,8 +14,22 @@ body {
   background: #242424;
 }
 
-body::-webkit-scrollbar {
+/* no scroll on the bod */
+/* body::-webkit-scrollbar {
   width: 0 !important;
+} */
+
+/* all other scroll bar styles: */
+*::-webkit-scrollbar {
+  width: 12px;
+}
+
+*::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.25);
+}
+
+*::-webkit-scrollbar-thumb {
+  background: #7c63ee42;
 }
 
 .App {
@@ -22,6 +40,9 @@ body::-webkit-scrollbar {
 #select-list {
   text-align: left;
   margin: 0.5em 0.5em;
+  max-height: 12em;
+  overflow: hidden;
+  overflow-y: scroll;
 }
 
 .item {
@@ -49,24 +70,31 @@ body::-webkit-scrollbar {
   width: 40%;
   padding: 8px;
   margin: 0 auto;
-  margin: 20% auto 0 auto;
+  margin: 10% auto 0 auto;
   background: #2c2c2c;
   border: 1px solid#484848;
   border-radius: 8px;
   color: #989ba7;
   text-align: right;
-  border-top: 0.9em solid #5d38ff;
+  border-left: 1.3em solid #5d38ff;
+}
+
+.select-form {
+  width: 100%;
+  margin: 0 1em;
+  display: flex;
 }
 
 #modifier {
-  width: 30%;
+  width: 20%;
   height: 45px;
   background: #5d38ff;
   color: #f2f2f2;
   position: relative;
-  top: -4.2em;
+  /* top: -4.2em; */
+  margin-right: 1.8em;
   z-index: 30;
-  border: 0.05em solid #74727281;
+  border: 0.04em solid #74727281;
   border-radius: 5px;
   font-size: 0.7em;
 }
@@ -76,7 +104,6 @@ body::-webkit-scrollbar {
 }
 
 #field-input {
-  margin: 0 1em;
   position: relative;
   cursor: text;
   border-radius: 5px;
@@ -93,14 +120,12 @@ body::-webkit-scrollbar {
 #field-input::placeholder {
   visibility: visible;
   height: auto;
-  -webkit-transition: none;
   transition: none;
 }
 
 #field-input {
   display: block;
-  margin: 0.3em 0 0 0;
-  padding: 1.3em 1em 0.5em 1em;
+  padding: 1.3em 0.5em 0.5em 0.5em;
   border: none;
   background-color: rgba(0, 0, 0, 0.098);
   color: #f2f2f2;
@@ -108,7 +133,7 @@ body::-webkit-scrollbar {
   line-height: 1;
   opacity: 0;
   transition: opacity 0.3s;
-  width: 90%;
+  width: 88%;
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
 }
 

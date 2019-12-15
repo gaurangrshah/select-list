@@ -6,6 +6,7 @@ export const RenderListItems = ({
   active,
   setActive,
   sortBy,
+  listItemProperty,
   handleSelected
 }) => {
   const [listItems, setListItems] = useState([]);
@@ -27,6 +28,7 @@ export const RenderListItems = ({
         className={`item ${active === i ? "active" : null}`}
         index={i}
         item={item}
+        listItemProperty={listItemProperty}
         // accounts for edge case when handling 0 as a value
         onMouseEnter={() => setActive(i)}
         onMouseLeave={() => setActive(0)}

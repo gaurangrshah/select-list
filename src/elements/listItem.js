@@ -1,9 +1,14 @@
 import React from "react";
 
-export default function ListItem({ item, children, ...props }) {
+export default function ListItem({
+  item,
+  listItemProperty,
+  children,
+  ...props
+}) {
   return (
     <div tabIndex={-1} {...props}>
-      <span>{item.name}</span>
+      <span>{item[listItemProperty]}</span>
       <span>{children}</span>
     </div>
   );
