@@ -48,11 +48,13 @@ export default function Selector({ data, focused, paperState, ...props }) {
 
   const checkSelected = val => val || val === 0;
 
+
   const handleSelected = val => {
     if (selected) return console.log("selected entry fail"); // don't run if there is already a selection
     // uses index to setSelected
     if (checkSelected(val)) {
       console.log("check", val);
+
       // sets selected via arrowKeys and enterPress, converts val to string before setting
       setSelected(val === 0 ? val.toString() : val); // handles edge case where setting
       return clearItemsSelected(); // - removes "only-items"
@@ -62,6 +64,7 @@ export default function Selector({ data, focused, paperState, ...props }) {
     let { value } = inputRef.current; // uses reference value to setSelected
     let index = getIndex(value, initialItems);
     if (checkSelected(index)) setSelected(index);
+
     return clearItemsSelected(); // - removes "only-items"
   };
 
@@ -79,6 +82,7 @@ export default function Selector({ data, focused, paperState, ...props }) {
       newElement.value = value; // add value property to copied selected item
       console.log("newElement", newElement);
       paperState.updatePaperState(newElement); // set state wtih updated item
+
       return clearItemsSelected(false);
     }
   };
@@ -127,6 +131,7 @@ export default function Selector({ data, focused, paperState, ...props }) {
                 ? initialItems[0].name
                 : "select..."
             }
+
             disabled={!checkSelected(selected)}
           />
         </form>
