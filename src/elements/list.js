@@ -20,6 +20,7 @@ const List = forwardRef(
     },
     ref
   ) => {
+    //edge-case zero issue:  force number to be zero, else throws a NAN error.
     const [active, setActive] = useState(selected ? Number(selected) : 0);
 
     const toggleUp = () => {

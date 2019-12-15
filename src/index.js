@@ -1,6 +1,6 @@
 import React, { useRef } from "react";
 import ReactDOM from "react-dom";
-import Selector from "./components/Selector";
+import Paper from "./components/Paper";
 import useFocusListener from "./hooks/useFocusListener";
 import { store } from "./data";
 import "./styles.css";
@@ -18,12 +18,7 @@ function App() {
 
   return (
     <div className="App" ref={appRef}>
-      <Selector
-        id="select-box"
-        data={store.items}
-        style={{ maxWidth: "30%" }}
-        focused={isFocused}
-      />
+      <Paper id="sheet" data={store.items} focused={isFocused} />
     </div>
   );
 }

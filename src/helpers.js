@@ -2,6 +2,11 @@ export function exists(id, arr) {
   // returns true if id exists in arr, false if not
   return arr.some(item => item === id);
 }
+
+export function existsName(name, arr) {
+  // returns true if id exists in arr, false if not
+  return arr.some(item => item === name);
+}
 // handle search term from input:
 export function filterSearch(term, arr, cb, reset) {
   if (!term.length > 0) {

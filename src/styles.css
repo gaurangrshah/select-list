@@ -1,7 +1,7 @@
-/* *:focus {
+*:focus {
   border: none;
   outline: none;
-} */
+}
 
 .App {
   font-family: sans-serif;
