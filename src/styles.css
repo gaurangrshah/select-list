@@ -7,6 +7,11 @@ html,
 body {
   margin: 0;
   padding: 0;
+  background: #242424;
+}
+
+body::-webkit-scrollbar {
+  width: 0 !important;
 }
 
 .App {
@@ -20,9 +25,11 @@ body {
 }
 
 .item {
-  padding: 5px 2px;
+  padding: 18px 2px 8px 8px;
   cursor: pointer;
   border-bottom: 0.7px solid #484848;
+  border-radius: 0.1em;
+  color: #f2f2f2;
 }
 
 .item:last-of-type {
@@ -31,13 +38,10 @@ body {
 
 .item.active {
   background: #5d38ffaf;
-  /* color: #242424; */
 }
 
 #sheet {
-  /* max-width: 40%; */
   margin: 0 auto;
-  background: #242424;
   height: 100vh;
 }
 
@@ -62,36 +66,38 @@ body {
   position: relative;
   top: -4.2em;
   z-index: 30;
-  border: none;
+  border: 0.05em solid #74727281;
   border-radius: 5px;
   font-size: 0.7em;
 }
 
-#input-form {
+#modifier:disabled {
+  background: #5d38ff1f;
+}
+
+#field-input {
   margin: 0 1em;
   position: relative;
-  transition: height 0.4s;
   cursor: text;
   border-radius: 5px;
 }
 
-#input-form::placeholder {
+#field-input::placeholder {
   z-index: 100;
   position: relative;
   visibility: hidden;
   height: 0;
-  -webkit-transition: visibility 0s 0.4s, height 0s 0.4s;
   transition: visibility 0s 0.4s, height 0s 0.4s;
 }
 
-#input-form::placeholder {
+#field-input::placeholder {
   visibility: visible;
   height: auto;
   -webkit-transition: none;
   transition: none;
 }
 
-#input-form input {
+#field-input {
   display: block;
   margin: 0.3em 0 0 0;
   padding: 1.3em 1em 0.5em 1em;
@@ -106,11 +112,11 @@ body {
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
 }
 
-#input-form input {
+#field-input {
   opacity: 1;
 }
 
-#input-form input:focus {
+#field-input:focus {
   outline: #f2f2f2;
   background-color: rgba(0, 0, 0, 0.253);
 }

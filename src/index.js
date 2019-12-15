@@ -17,7 +17,7 @@ function App() {
   ]);
 
   return (
-    <div className="App" ref={appRef}>
+    <div className="App" ref={appRef} tabIndex={0}>
       <Paper id="sheet" data={store.items} focused={isFocused} />
     </div>
   );

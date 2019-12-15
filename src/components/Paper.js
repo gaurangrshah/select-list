@@ -10,8 +10,8 @@ export default function Paper({ id, ...props }) {
     <div id={id}>
       <Selector
         id="select-box"
-        {...props}
         paperState={{ paper, updatePaperState }}
+        {...props}
       />
       {/* const {focused, data = store.items} = {...props} */}
     </div>

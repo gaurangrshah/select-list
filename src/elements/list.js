@@ -1,8 +1,6 @@
 import React, { useState, useEffect, forwardRef } from "react";
 import { RenderListItems } from "../components/RenderListItems";
 import useKeyPress from "../hooks/useKeyPress";
-// import useClickListener from "../hooks/useClickListener"; // TODO
-// const [listened, type, target] = useClickListener();
 
 const List = forwardRef(
   (
@@ -32,13 +30,13 @@ const List = forwardRef(
       return setActive(active + 1);
     };
 
-    const submit = () => {
-      handleSelected(active);
-      return setActive(active);
+    const submitSelected = () => {
+      let currActive = active;
+      return handleSelected(currActive);
     };
     useKeyPress("ArrowDown", ref, toggleDown);
     useKeyPress("ArrowUp", ref, toggleUp);
-    useKeyPress("Enter", ref, submit);
+    useKeyPress("Enter", ref, submitSelected);
 
     useEffect(() => {
       // console.log(active);
