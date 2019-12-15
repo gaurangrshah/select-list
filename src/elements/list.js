@@ -20,6 +20,7 @@ const List = forwardRef(
     },
     ref
   ) => {
+    //edge-case zero issue:  force number to be zero, else throws a NAN error.
     const [active, setActive] = useState(selected ? Number(selected) : 0);
 
     const toggleUp = () => {
@@ -32,10 +33,8 @@ const List = forwardRef(
     };
 
     const submit = () => {
-      if (active >= 0) {
-        handleSelected(active);
-        return setActive(active);
-      }
+      handleSelected(active);
+      return setActive(active);
     };
     useKeyPress("ArrowDown", ref, toggleDown);
     useKeyPress("ArrowUp", ref, toggleUp);

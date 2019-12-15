@@ -4,7 +4,7 @@ import { Button } from "../elements/buttons";
 import List from "../elements/list";
 import useKeyPress from "../hooks/useKeyPress";
 
-import { filterSearch, getIndex } from "../helpers";
+import { filterSearch, getIndex, existsName } from "../helpers";
 
 // =================  ================= ================= =================
 // =============== handling selected and updaing selected  ================
@@ -13,7 +13,7 @@ import { filterSearch, getIndex } from "../helpers";
 // triggered by enterpress on list items
 // =================  ================= ================= =================
 
-export default function Selector({ data, focused, ...props }) {
+export default function Selector({ data, focused, paperState, ...props }) {
   const selectorRef = useRef();
   const inputRef = useRef();
   const listRef = useRef();
@@ -26,7 +26,6 @@ export default function Selector({ data, focused, ...props }) {
 
   // selected is represented by each item's own index
   const [selected, setSelected] = useState(undefined);
-  const [paper, setPaper] = useState([]);
 
   // handles list focus on downarrowPress
   useKeyPress("ArrowDown", inputRef, focusList);
@@ -44,34 +43,42 @@ export default function Selector({ data, focused, ...props }) {
       setItems(initialItems);
       setSelected(undefined);
     }
-    focusInput();
+    return focusInput();
   }
+
+  const checkSelected = val => val || val === 0;
 
   const handleSelected = val => {
     if (selected) return console.log("selected entry fail"); // don't run if there is already a selection
     // uses index to setSelected
-    if (val || val === 0) {
+    if (checkSelected(val)) {
+      console.log("check", val);
       // sets selected via arrowKeys and enterPress, converts val to string before setting
       setSelected(val === 0 ? val.toString() : val); // handles edge case where setting
       return clearItemsSelected(); // - removes "only-items"
     }
-    // sets selected on search input Submit
+
+    // sets selected on search input Submit // when nothing is selected
     let { value } = inputRef.current; // uses reference value to setSelected
     let index = getIndex(value, initialItems);
-    index && setSelected(index);
+    if (checkSelected(index)) setSelected(index);
     return clearItemsSelected(); // - removes "only-items"
   };
 
   const handleSubmit = e => {
     e.preventDefault();
-    // call handle selected if nothing is selected
     if (!selected) return handleSelected();
+    // call handle selected if nothing is selected
+
     let { value } = inputRef.current;
+
+    // if (selected && checkSelected(value)) {
     if (selected && value) {
       // create new element and add to paperState
       let newElement = Object.assign({}, initialItems[selected]);
       newElement.value = value; // add value property to copied selected item
-      setPaper(st => [...st, newElement]); // set state wtih updated item
+      console.log("newElement", newElement);
+      paperState.updatePaperState(newElement); // set state wtih updated item
       return clearItemsSelected(false);
     }
   };
@@ -83,9 +90,10 @@ export default function Selector({ data, focused, ...props }) {
     <>
       <small>
         {/* <mark>{`store: ${JSON.stringify(store.items)}`}</mark> */}
+        <mark>{`selected: ${JSON.stringify(selected)}`}</mark>
         <mark>{`selected: ${JSON.stringify(initialItems[selected])}`}</mark>
         <br />
-        <mark>{`paper: ${JSON.stringify(paper)}`}</mark>
+        <mark>{`paper: ${JSON.stringify(paperState.paper)}`}</mark>
       </small>
       <br />
       <div className={`container`} ref={selectorRef} {...props}>
@@ -97,7 +105,9 @@ export default function Selector({ data, focused, ...props }) {
             type="text"
             // items={items}
             defaultValue={""}
-            placeholder={!selected ? `search...` : "value"}
+            placeholder={
+              !selected ? `search...` : selected === 0 ? "zero hr" : "value"
+            }
             onChange={e =>
               filterSearch(e.target.value, items, setItems, initialItems)
             }
@@ -106,10 +116,18 @@ export default function Selector({ data, focused, ...props }) {
           />
           <Button
             id={`modifier`}
-            onClick={selected ? clearItemsSelected : handleSelected}
+            onClick={
+              checkSelected(selected) ? clearItemsSelected : handleSelected
+            }
             type="button"
-            children={selected ? initialItems[selected].name : "select..."}
-            disabled={!selected}
+            children={
+              selected && initialItems[selected]
+                ? initialItems[selected].name
+                : selected === 0 && initialItems[0]
+                ? initialItems[0].name
+                : "select..."
+            }
+            disabled={!checkSelected(selected)}
           />
         </form>
 
