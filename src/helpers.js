@@ -31,5 +31,6 @@ export function getIndex(value, arr) {
   if (arr) {
     return [...arr].findIndex(item => item.name === value);
   }
+
   return console.log("cannot run get index with", value, arr);
 }

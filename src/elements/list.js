@@ -32,10 +32,8 @@ const List = forwardRef(
     };
 
     const submit = () => {
-      if (active >= 0) {
-        handleSelected(active);
-        return setActive(active);
-      }
+      handleSelected(active);
+      return setActive(active);
     };
     useKeyPress("ArrowDown", ref, toggleDown);
     useKeyPress("ArrowUp", ref, toggleUp);
