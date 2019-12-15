@@ -63,7 +63,7 @@ export default function Selector({ data, focused, paperState, ...props }) {
     // sets selected on search input Submit // when nothing is selected
     let { value } = inputRef.current; // uses reference value to setSelected
     let index = getIndex(value, initialItems);
-    if (checkSelected(index)) setSelected(index);
+    if (checkSelected(index)) setSelected(index.toString());
 
     return clearItemsSelected(); // - removes "only-items"
   };
@@ -78,6 +78,7 @@ export default function Selector({ data, focused, paperState, ...props }) {
     // if (selected && checkSelected(value)) {
     if (selected && value) {
       // create new element and add to paperState
+      // console.log(selected && value)
       let newElement = Object.assign({}, initialItems[selected]);
       newElement.value = value; // add value property to copied selected item
       console.log("newElement", newElement);
@@ -101,7 +102,7 @@ export default function Selector({ data, focused, paperState, ...props }) {
       </small>
       <br />
       <div className={`container`} ref={selectorRef} {...props}>
-        <form onSubmit={handleSubmit} tabIndex={-1}>
+        <form onSubmit={handleSubmit} tabIndex={-1} id="input-form">
           <Input
             ref={inputRef}
             styles={{ border: "1px solid blue" }}
@@ -128,8 +129,8 @@ export default function Selector({ data, focused, paperState, ...props }) {
               selected && initialItems[selected]
                 ? initialItems[selected].name
                 : selected === 0 && initialItems[0]
-                ? initialItems[0].name
-                : "select..."
+                  ? initialItems[0].name
+                  : "select..."
             }
 
             disabled={!checkSelected(selected)}

@@ -7,13 +7,13 @@ export default function Paper({ id, ...props }) {
   const updatePaperState = newElement => setPaper(st => [...st, newElement]);
 
   return (
-    <span id={id}>
+    <div id={id}>
       <Selector
         id="select-box"
         {...props}
         paperState={{ paper, updatePaperState }}
       />
       {/* const {focused, data = store.items} = {...props} */}
-    </span>
+    </div>
   );
 }
