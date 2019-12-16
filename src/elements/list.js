@@ -19,28 +19,27 @@ const List = forwardRef(
     },
     ref
   ) => {
-    //edge-case zero issue:  force number to be zero, else throws a NAN error.
-    const [active, setActive] = useState(
-      selected ? Number(selected) : Number(0)
-      // ensures value gets reset when a selection is made.
-    );
+    const [active, setActive] = useState(0);
 
     // ############ ############  ############  ############  ############
     // ############ ############  ############  ############  ############
     const toggleUp = () => {
       if (active === 0) return focusInput();
-      return setActive(active - 1);
+      setActive(active - 1);
+      return;
     };
 
     const toggleDown = () => {
       if (active === items.length - 1) return;
-      return setActive(active + 1);
+      setActive(active + 1);
+      return;
     };
 
     const submitSelected = () => {
       let currActive = active;
       handleSelected(currActive);
-      return setActive(4);
+      setActive(0); // resets active when submitted
+      return;
     };
 
     useKeyPress("ArrowDown", ref, toggleDown);

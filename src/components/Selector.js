@@ -1,11 +1,10 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Input } from "../elements/inputs";
 import { Button } from "../elements/buttons";
 import List from "../elements/list";
 import useKeyPress from "../hooks/useKeyPress";
 
 import { filterSearch, getIndex } from "../helpers";
-
 // =================  ================= ================= =================
 // =============== handling selected and updaing selected  ================
 // =================  ================= ================= =================
@@ -15,7 +14,6 @@ import { filterSearch, getIndex } from "../helpers";
 // -- when filterSearch returns a match, add the "active" class to the matched item
 
 // =================  ================= ================= =================
-
 export default function Selector({
   data,
   focused,
@@ -28,9 +26,8 @@ export default function Selector({
   const listRef = useRef();
 
   const focusInput = () => inputRef.current.focus();
-  const focusList = () => {
-    return listRef.current.focus();
-  };
+  const blurInput = () => inputRef.current.blur();
+  const focusList = () => listRef.current.focus();
 
   const initialItems = data;
   const [items, setItems] = useState(initialItems);
@@ -43,6 +40,12 @@ export default function Selector({
 
   // handles list focus on downarrowPress
   useKeyPress("ArrowDown", inputRef, focusList);
+
+  useEffect(() => {
+    if (items) focusInput();
+
+    return () => blurInput();
+  }, []);
 
   // ================ ================  ================  ================
   // ================ ================  ================  ================
@@ -122,14 +125,10 @@ export default function Selector({
 
   return (
     <>
-      <small>
-        {/* <mark>{`selected: ${JSON.stringify(selected)}`}</mark>
+      {/* <mark>{`selected: ${JSON.stringify(selected)}`}</mark>
         <br />
         <mark>{`selected: ${JSON.stringify(initialItems[selected])}`}</mark>
         <br /> */}
-        <mark>{`paper: ${JSON.stringify(paperState.paper)}`}</mark>
-        <br />
-      </small>
       <div className={`container`} ref={selectorRef} {...props}>
         <form onSubmit={handleSubmit} tabIndex={-1} className="select-form">
           <Input

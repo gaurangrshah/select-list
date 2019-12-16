@@ -1,19 +1,9 @@
 import React, { useState } from "react";
-import Selector from "./Selector";
 
-export default function Paper({ id, ...props }) {
-  const [paper, setPaper] = useState([]);
-
-  const updatePaperState = newElement => setPaper(st => [...st, newElement]);
-
+export default function Paper({ id, paperState, ...props }) {
   return (
     <div id={id}>
-      <Selector
-        id="select-box"
-        paperState={{ paper, updatePaperState }}
-        /* const {focused, data = store.items} = {...props} */
-        {...props}
-      />
+      <mark>{`paper: ${JSON.stringify(paperState.paper)}`}</mark>
     </div>
   );
 }

@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from "react";
+import React, { useRef, useEffect } from "react";
 
 function useOutsideClick(ref, { toggle1, handleToggle1 }) {
   /**
