@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useRef } from "react";
 import { Input } from "../elements/inputs";
 import { Button } from "../elements/buttons";
 import List from "../elements/list";
@@ -9,7 +9,11 @@ import { filterSearch, getIndex } from "../helpers";
 // =================  ================= ================= =================
 // =============== handling selected and updaing selected  ================
 // =================  ================= ================= =================
-// TODO: handle errors for non-matching element search imputs
+// TODO: ------------------------------------------------------------------
+
+// -- handle errors for non-matching element search imputs
+// -- when filterSearch returns a match, add the "active" class to the matched item
+
 // =================  ================= ================= =================
 
 export default function Selector({
@@ -24,7 +28,9 @@ export default function Selector({
   const listRef = useRef();
 
   const focusInput = () => inputRef.current.focus();
-  const focusList = () => listRef.current.focus();
+  const focusList = () => {
+    return listRef.current.focus();
+  };
 
   const initialItems = data;
   const [items, setItems] = useState(initialItems);
@@ -37,11 +43,6 @@ export default function Selector({
 
   // handles list focus on downarrowPress
   useKeyPress("ArrowDown", inputRef, focusList);
-
-  // useEffect(() => {
-  //   // console.log("selected - updated", initialItems[selected]);
-  //   // console.log(initialItems);
-  // }, [selected, initialItems]);
 
   // ================ ================  ================  ================
   // ================ ================  ================  ================
@@ -57,7 +58,7 @@ export default function Selector({
     } else {
       // any other argument, aside from default will trigger this case.
       setItems(initialItems); // reset items
-      setSelected(undefined); // clear selected item value
+      setSelected(""); // clear selected item value
     }
     return focusInput(); // focus input
   }

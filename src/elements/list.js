@@ -20,36 +20,37 @@ const List = forwardRef(
     ref
   ) => {
     //edge-case zero issue:  force number to be zero, else throws a NAN error.
-    const [active, setActive] = useState(selected ? Number(selected) : 0);
+    const [active, setActive] = useState(
+      selected ? Number(selected) : Number(0)
+      // ensures value gets reset when a selection is made.
+    );
 
+    // ############ ############  ############  ############  ############
+    // ############ ############  ############  ############  ############
     const toggleUp = () => {
       if (active === 0) return focusInput();
       return setActive(active - 1);
     };
+
     const toggleDown = () => {
-      if (active === items.length - 1) return setActive(0);
+      if (active === items.length - 1) return;
       return setActive(active + 1);
     };
 
     const submitSelected = () => {
       let currActive = active;
-      return handleSelected(currActive);
+      handleSelected(currActive);
+      return setActive(4);
     };
+
     useKeyPress("ArrowDown", ref, toggleDown);
     useKeyPress("ArrowUp", ref, toggleUp);
     useKeyPress("Enter", ref, submitSelected);
-
-    useEffect(() => {
-      // console.log(active);
-    }, [active]);
+    // ############ ############  ############  ############  ############
+    // ############ ############  ############  ############  ############
 
     return (
-      <div
-        id={id} // id is also being use to set isFocused.
-        ref={ref}
-        tabIndex={1}
-        {...props}
-      >
+      <div id={id} ref={ref} tabIndex={1} {...props}>
         <RenderListItems
           items={items}
           active={active}

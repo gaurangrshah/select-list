@@ -9,6 +9,8 @@
 
 html,
 body {
+  height: 100%;
+  overflow: hidden;
   margin: 0;
   padding: 0;
   background: #242424;
@@ -20,7 +22,7 @@ body {
 } */
 
 /* all other scroll bar styles: */
-*::-webkit-scrollbar {
+/* *::-webkit-scrollbar {
   width: 12px;
 }
 
@@ -30,59 +32,32 @@ body {
 
 *::-webkit-scrollbar-thumb {
   background: #7c63ee42;
-}
+} */
 
 .App {
   font-family: sans-serif;
   text-align: center;
 }
 
-#select-list {
-  text-align: left;
-  margin: 0.5em 0.5em;
-  max-height: 12em;
-  overflow: hidden;
-  overflow-y: scroll;
-}
-
-.item {
-  padding: 18px 2px 8px 8px;
-  cursor: pointer;
-  border-bottom: 0.7px solid #484848;
-  border-radius: 0.1em;
-  color: #f2f2f2;
-}
-
-.item:last-of-type {
-  margin-bottom: 1em;
-}
-
-.item.active {
-  background: #5d38ffaf;
-}
-
-#sheet {
-  margin: 0 auto;
-  height: 100vh;
-}
-
 #select-box {
   width: 40%;
-  padding: 8px;
+  padding: 12px;
   margin: 0 auto;
-  margin: 10% auto 0 auto;
+  /* margin: 10% auto 0 auto; */
   background: #2c2c2c;
   border: 1px solid#484848;
-  border-radius: 8px;
+  border-radius: 4px;
   color: #989ba7;
   text-align: right;
   border-left: 1.3em solid #5d38ff;
 }
 
 .select-form {
-  width: 100%;
-  margin: 0 1em;
+  width: 95%;
+
+  margin: 1em 1em;
   display: flex;
+  /* background: green; */
 }
 
 #modifier {
@@ -92,7 +67,7 @@ body {
   color: #f2f2f2;
   position: relative;
   /* top: -4.2em; */
-  margin-right: 1.8em;
+  /* margin-right: 1.8em; */
   z-index: 30;
   border: 0.04em solid #74727281;
   border-radius: 5px;
@@ -104,9 +79,9 @@ body {
 }
 
 #field-input {
-  position: relative;
   cursor: text;
-  border-radius: 5px;
+  border-radius: 0.25em;
+  flex: 1;
 }
 
 #field-input::placeholder {
@@ -124,7 +99,7 @@ body {
 }
 
 #field-input {
-  display: block;
+  display: block; /* 🚧 keep for better scroll behavior? -- needs testing */
   padding: 1.3em 0.5em 0.5em 0.5em;
   border: none;
   background-color: rgba(0, 0, 0, 0.098);
@@ -133,7 +108,6 @@ body {
   line-height: 1;
   opacity: 0;
   transition: opacity 0.3s;
-  width: 88%;
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
 }
 
@@ -144,4 +118,42 @@ body {
 #field-input:focus {
   outline: #f2f2f2;
   background-color: rgba(0, 0, 0, 0.253);
+}
+
+#select-list {
+  text-align: left;
+  max-height: 12em;
+  overflow: hidden;
+  overflow-y: scroll;
+  scroll-behavior: smooth;
+}
+
+#select-list::-webkit-scrollbar {
+  width: 0 !important;
+}
+
+.item {
+  padding: 18px 2px 8px 8px;
+  cursor: pointer;
+  border-bottom: 0.7px solid #484848;
+  border-radius: 0.1em;
+  color: #f2f2f2;
+}
+
+.item:last-of-type {
+  margin-bottom: 1em;
+}
+
+.item.active {
+  background: #5d38ffaf;
+  /* padding: 24px 6px 12px 10px; */
+  /* position: sticky; */
+  /* padding-top: 1.5em; */
+}
+
+#sheet {
+  margin: 0 auto;
+  height: 80vh;
+  width: 90%;
+  border: 2px solid #f2f2f2;
 }
